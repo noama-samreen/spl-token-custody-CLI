@@ -137,6 +137,9 @@ def create_header(canvas, doc):
 
 def create_pdf(token_data, output_dir):
     """Generate PDF for a single token"""
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
+    
     # Handle missing or invalid name/symbol
     token_name = token_data.get('name', 'Unknown')
     if token_name in ['N/A', None, '']:
@@ -147,8 +150,12 @@ def create_pdf(token_data, output_dir):
         token_symbol = 'UNKNOWN'
     
     filename = f"{token_name} ({token_symbol}) Security Memo.pdf"
+    # Sanitize filename to remove invalid characters
     filename = "".join(c for c in filename if c.isalnum() or c in (' ', '-', '_', '(', ')', '.'))
     filepath = os.path.join(output_dir, filename)
+    
+    # Ensure the full path to the file exists
+    os.makedirs(os.path.dirname(os.path.abspath(filepath)), exist_ok=True)
     
     doc = SimpleDocTemplate(
         filepath,
