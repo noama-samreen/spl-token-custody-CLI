@@ -57,17 +57,51 @@ A Python-based tool for analyzing Solana tokens, supporting both standard SPL to
 
 ## Usage
 
-### Command Line
-```bash
-# Single token analysis
-python spl_token_analysis_v2.py
+### Command Line Interface
 
-# Batch processing
-python spl_token_analysis_v2.py input_file.txt [output_prefix]
+#### Single Token Analysis
+```bash
+# Basic usage
+python token_report_cli.py <token_address>
+
+# With custom output directory
+python token_report_cli.py <token_address> --output ./reports
+
+# Example
+python token_report_cli.py Hb3vHHZFpnQ61sCQF4myZm8QsYVYng3ULXu9zDTxpump
 ```
 
-### Output Formats
-- **JSON**: Detailed analysis results
+#### Batch Processing
+```bash
+# Basic batch processing
+python token_report_cli.py <input_file.txt> --batch
+
+# With custom output directory
+python token_report_cli.py <input_file.txt> --batch --output ./reports
+
+# Example
+python token_report_cli.py spl-addresses-test.txt --batch
+```
+
+### Input File Format
+The input file for batch processing should contain one token address per line:
+```text
+Hb3vHHZFpnQ61sCQF4myZm8QsYVYng3ULXu9zDTxpump
+DZABY9tvW2yj6qmgYTJdigeWUBNVEcXTawJyAigupump
+BS9ecLr44AkZBa8udScJUgiYnGMH6swojZWyQorkpump
+...
+```
+
+### Output Files
+- **PDF Reports**: Individual security assessment reports for each token
+  - Format: `{token_name} ({token_symbol}) Security Memo.pdf`
+  - Location: Current directory or specified output directory
+- **JSON Results** (Batch Processing):
+  - Format: `batch_results_YYYYMMDD_HHMMSS.json`
+  - Contains detailed analysis for all processed tokens
+- **Log File**:
+  - Format: `batch_results_YYYYMMDD_HHMMSS.log`
+  - Contains processing details and error messages
 
 ### Example Output Structure
 ```json
